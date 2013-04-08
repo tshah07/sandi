@@ -7,19 +7,19 @@
 * Pass data under variable $data['gridData'] in controller , under $gridData
 * */
 ?>
+<link rel="stylesheet"
+	href="/book/dojo/resources/dojo.css">
+<link rel="stylesheet"
+	href="/book/dijit/themes/claro/claro.css" />
+<link rel="stylesheet"
+	href="/book/dojox/grid/resources/Grid.css" />
 <link
-	rel="stylesheet"
-	href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dojo.css">
-<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css" />
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojox/grid/resources/Grid.css" />
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojox/grid/resources/claroGrid.css" /> -->
-<link
-	rel="stylesheet" href="//localhost:8080/sandeep/public/claro.css" />
-<link
-	rel="stylesheet" href="//localhost:8080/sandeep/public/claro.css" />
+	rel="stylesheet" href="/book/dojox/grid/resources/claroGrid.css" />
 
-<script
-	src="http://dojofoundation.org/packages/dgrid/js/dojo/dojo.js"></script>
+
+<script src="/book/dojo/dojo.js"></script>
+
+
 
 <script>
 		var dojoConfig;
@@ -40,7 +40,17 @@
 			};
 		}());
 	</script>
+<?php
+$colomn = (array_keys((array)$gridData[0]));
 
+$colomn = str_replace('@',"",$colomn);
+
+foreach ($colomn as $key ) {
+				echo $key . ":\"" . $key . "\",<br>";
+			}
+echo "<hr>";
+print_r(str_replace('@',"",json_encode($gridData)));
+			?>
 <script>
 	require(["dgrid/Grid", "dojo/domReady!"], function(Grid) {
 	var data = <?php echo json_encode($gridData); ?>;
@@ -48,21 +58,18 @@
 	
 	var grid = new Grid({
 	columns : {
-		<?php
-			$colomn = (array_keys((array)$gridData[0]));
-			
-			$colomn = str_replace('@',"",$colomn);
-			
-			foreach ($colomn as $key) {
-				echo $key . ":\"" . $key . "\",";
-			}
-		?>
+		name:"name",
+		address1:"address1",
+		city:"city",
+		stateProvinceCode:"stateProvinceCode",
+		postalCode:"postalCode",
+		countryCode:"countryCode",
 		}
 		}, "grid");
 		grid.renderArray(data);
 		});
 	</script>
-<div class ='claro' id="grid"></div>
+<div class='claro' id="grid"></div>
 
 
 
