@@ -4,7 +4,7 @@ class Frontpage extends Main_Controller {
 	public function index()
 	{
 		$this->load->view('include/header');
-		$this->load->view('frontpage');
+		$this->load->view('templates/login');
 		$this->load->view('include/footer');
 	}
 
