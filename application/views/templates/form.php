@@ -13,7 +13,6 @@ $this->load->helper('form');
  * )
 */
 ?>
-<div class="span4">
 
 	<form  method="POST">
 
@@ -40,7 +39,4 @@ $this->load->helper('form');
 		</div>
 		</fieldset>
 	</form>
-</div>
 
-<div class="span4"></div>
-<div class="span4"></div>
