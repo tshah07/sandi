@@ -13,7 +13,7 @@ class Frontpage extends Main_Controller {
 		$this->load->view('frontpage');
 
 		$this->load->model('hotel_model');
-		$data = $this->hotel_model->getHotelsList('long island city','ny','usa','04-11-2013','04-12-2013');
+		$data = $this->hotel_model->getHotelsList('long island city','ny','usa','04-30-2013','04-12-2013');
 		$grid['gridData'] = $data->HotelListResponse->HotelList->HotelSummary;
 	
 		$this->load->view('grid',$grid);
