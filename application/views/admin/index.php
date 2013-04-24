@@ -62,6 +62,14 @@
 					</div>
 				</div>
 
+				<div class="control-group">
+					<div class="controls">
+						<input name="numberOfBooks" type="text" id="inputNumberOfBooks" placeholder="Number Of Books">
+						<input name="position" type="text" id="inputPosition" placeholder="Position In Library">
+
+					</div>
+				</div>
+
 				<!-- Date Script -->
 				<script>
 					$(function() {
@@ -85,7 +93,7 @@
 						$(function() {
 
 							$("#InputBranchId").autocomplete({
-								source : 'http://localhost:8080/sandi/index.php/admin/searchBranchId',
+								source : 'http://localhost:70/sandi/index.php/admin/searchBranchId',
 							})
 
 						});
@@ -95,7 +103,7 @@
 						<label class="control-label" for="InputBranchId">Branch Id</label>
 						<div class="controls">
 
-							<input type="text" id="InputBranchId" placeholder="Branch Id">
+							<input name ="branchId"type="text" id="InputBranchId" placeholder="Branch Id">
 						</div>
 					</form>
 

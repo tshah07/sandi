@@ -16,33 +16,33 @@ class Books_model extends CI_Model {
 		return ($data);
 	}
 
-	function addBook($title, $isbn = null, $author = NULL, $publisher = NULL, $publishDate = NULL, $branchId = '', $numberOfBooks = '', $position = '') {
+	function addBook($title, $isbn = null, $author = NULL, $publisher = NULL, $publishDate = NULL, $branchId , $numberOfBooks = '', $position = '') {
 		if ($title == '') {
 			echo "Please Enter Title for Book";
 			return FALSE;
 		}
 
 		//If branchId , numberOfBooks or position is assigned as default
-		if ($branchId == '')
+		if ($branchId == '') {
 			$branchId = '1';
-		if ($numberOfBooks == '')
+		}
+		if ($numberOfBooks == '') {
 			$numberOfBooks = '1';
-		if ($position == '')
-			$position = 'not assigned';
+		}
+		if ($position == '') {$position = 'not assigned';
+		}
 
-		
-		
 		// Updating books database
 		$sql = "INSERT INTO `sandeep`.`books` (`bookId`, `title`, `isbn`, `author`, `publisher`, `publishDate`) VALUES (NULL, '$title', '$isbn','$author', '$publisher', '$publishDate')";
 		$this -> db -> query($sql);
+		echo "$sql";
 
-		
-		
 		//Get BookId Of recently inserted one so that we can use it to update branchdetails
 		// as our branchdetails has a child key bookId referencing to bookId
 
 		$sql = "SELECT bookId FROM `books` where title = '$title' and isbn = '$isbn' and author = '$author' and publisher = '$publisher'";
 		$data = $this -> db -> query($sql) -> result_array();
+		echo "$sql";
 		$bookId = $data[0]['bookId'];
 
 		//Updating branches , adding book to that branch
@@ -66,14 +66,15 @@ class Books_model extends CI_Model {
 	function getBranchDetails($id = '', $name = '', $location = '') {
 		$sql = "SELECT br.name,br.location,bk.bookId,bk.title,bk.author,bk.isbn,position,bk.publisher,bk.publishDate ,bd.numberOfBooks\n" . "FROM `branchdetails` as bd \n" . "join `books` as bk on bd.bookId = bk.bookId \n" . "right outer join `branches` as br on br.branchId = bd.branchId \n" . "WHERE br.branchId = $id ";
 		$data = $this -> db -> query($sql) -> result_array();
+		echo "$sql";
 		return $data;
 	}
 
 	// Function to search branch Id
 	function searchBranchId($str = '') {
 
-		$str = "%" . $str . "%";
-		$sql = "SELECT concat(name,', ',location) as label FROM `branches` WHERE `name` LIKE '$str' ";
+		$str = "'%" . $str . "%'";
+		$sql = "SELECT concat(branchId,' | ',name,', ',location) as label FROM `branches` WHERE `name` LIKE $str  or `branchId` LIKE $str or `location` like $str";
 		$data = $this -> db -> query($sql) -> result_array();
 		return ($data);
 	}
