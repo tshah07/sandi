@@ -18,8 +18,10 @@ class Login extends MY_Controller {
 	}
 	
 	
-
+	// Reader login function 
+	
 	public function readerLogin() {
+<<<<<<< HEAD
 		
 		
 		if ($_GET['username'] == '' or $_GET['password'] == '') {
@@ -30,13 +32,31 @@ class Login extends MY_Controller {
 		$username = $_GET['username'];
 		$password = $_GET['password'];
 		
+=======
+		// Get username and password from form
+		$username = $_GET['username'];
+		$password = $_GET['password'];
+
+		// Checking if one of both fields are not empty
+		if ($username == '' or $password == '') {
+			$data['error'] = "Please Login with valid credential(REaderid Is ur username)";
+		}
+>>>>>>> 528ea6236da0a622dd01d2b900ec8dcb780d97de
 		
+		// If not empty then check if he is already logged in? 
 		$loggedIn = $this -> session -> userdata('logged_in');
 		
 		if($loggedIn == 1){
 			redirect('/reader');
 		}
+<<<<<<< HEAD
 		if (!isset($loggedIn) || empty($loggedIn)) {
+=======
+		
+		// If session doesnt contain any login info then push username and password 
+		// Check it with reader table for password
+		if (!isset($loggedIn)) {
+>>>>>>> 528ea6236da0a622dd01d2b900ec8dcb780d97de
 
 			// $sql = "SELECT * FROM  `readers` WHERE readerId =  '$username'";
 			// $password_verify = $this -> db -> query($sql) -> result_array();
