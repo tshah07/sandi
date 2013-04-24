@@ -1,8 +1,10 @@
 <div style="width: 320px; margin: 0 auto;">
 	<h3>Login</h3>
 
-	<?php if (!isset($error)) 
-		$error = 'Please Login First with ur readerId';
+	<?php
+	if (!isset($error)) {
+		$error = 'Please Login First with ur readerId</br> Use username = 1 and Password = sandy';
+	}
 	?>
 	<div class="alert alert-error">
 		<b>Error! :</b><?= $error; ?>

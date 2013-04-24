@@ -11,15 +11,14 @@ class Reader extends Main_Controller {
 		date_default_timezone_set('America/New_York');
 		$logged_in = $this -> session -> userdata('logged_in');
 		$this -> readerId = $this -> session -> userdata('readerId');
-		if (!isset($logged_in)) {
+		if (!isset($logged_in) || empty($logged_in)) {
 			redirect('/login/readerLogin');
 		}
 
 	}
 
 	public function index() {
-		$sessionData = $this->session->all_userdata();
-		print_r($sessionData);
+		
 		$this -> load -> view('include/header');
 		$this -> load -> view('reader/index');
 		$this -> load -> view('reader/search');

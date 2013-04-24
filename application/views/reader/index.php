@@ -1,1 +1,1 @@
-<div class="container"></div><a class="btn btn-primary pull-right" href="<?= base_url()?>index.php/login/logout">LogOut</a></div>
+<div class="container"><a class="btn btn-primary pull-right" href="<?= base_url()?>index.php/login/logout">LogOut</a></div>

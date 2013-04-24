@@ -10,21 +10,46 @@ class Books_model extends CI_Model {
 		$str = "%" . $str . "%";
 		// Query for : Fetching data from books table where any of column = 'str'
 		// Data returned from this query is a single column i.e all column info is concatinated (because of future use of autocomplete function)
-		$sql = "SELECT concat(title,', ',author,', ',isbn,', ',publisher) as label FROM `books` where title like '$str' or author like '$str' or isbn like '$str' or publisher like '$str'";
+		$sql = "SELECT concat(title,' | ',author,' | ',isbn,' | ',publisher) as label FROM `books` where title like '$str' or author like '$str' or isbn like '$str' or publisher like '$str'";
 		//echo $sql;
 		$data = $this -> db -> query($sql) -> result_array();
 		return ($data);
 	}
 
-	function addBook($title, $isbn = null, $author = NULL, $publisher = NULL, $publishDate = NULL) {
+	function addBook($title, $isbn = null, $author = NULL, $publisher = NULL, $publishDate = NULL, $branchId = '', $numberOfBooks = '', $position = '') {
 		if ($title == '') {
 			echo "Please Enter Title for Book";
 			return FALSE;
 		}
 
+		//If branchId , numberOfBooks or position is assigned as default
+		if ($branchId == '')
+			$branchId = '1';
+		if ($numberOfBooks == '')
+			$numberOfBooks = '1';
+		if ($position == '')
+			$position = 'not assigned';
+
+		
+		
+		// Updating books database
 		$sql = "INSERT INTO `sandeep`.`books` (`bookId`, `title`, `isbn`, `author`, `publisher`, `publishDate`) VALUES (NULL, '$title', '$isbn','$author', '$publisher', '$publishDate')";
 		$this -> db -> query($sql);
 
+		
+		
+		//Get BookId Of recently inserted one so that we can use it to update branchdetails
+		// as our branchdetails has a child key bookId referencing to bookId
+
+		$sql = "SELECT bookId FROM `books` where title = '$title' and isbn = '$isbn' and author = '$author' and publisher = '$publisher'";
+		$data = $this -> db -> query($sql) -> result_array();
+		$bookId = $data[0]['bookId'];
+
+		//Updating branches , adding book to that branch
+
+		$sql = "INSERT INTO `sandeep`.`branchdetails` (`branchId`, `bookId`, `numberOfBooks`, `position`) VALUES ('$branchId', '$bookId', '$numberOfBooks' , '$position');";
+		echo $sql;
+		$this -> db -> query($sql);
 		return TRUE;
 	}
 
@@ -95,11 +120,11 @@ class Books_model extends CI_Model {
 						$this -> load -> library('custom');
 
 						// adding 20 days to start date for return date
-						// Generate a unique Reservation id 
-						$resId = md5($bDate+$bookId+rand());
+						// Generate a unique Reservation id
+						$resId = md5($bDate + $bookId + rand());
 						// Add 20 days to borrow Date
 						$rdate = $this -> custom -> addDate($bDate, '+20 day');
-						
+
 						// Inserting All values need to make reservation
 						$sql = "INSERT INTO `sandeep`.`borrow` (`readerId`, `resId`, `bDate`, `rDate`, `bookId`,`branchId`) VALUES ('$readerId', '$resId', '$bDate', '$rdate', $bookId,'$branchId');";
 						$data = $this -> db -> query($sql);
@@ -110,8 +135,7 @@ class Books_model extends CI_Model {
 
 						$sql = "SELECT * FROM `borrow` WHERE `resId` = 20 ORDER BY `borrow`.`branchId`";
 
-						
-						$info = array('bDate' => $bDate, 'rDate' => $rdate, 'bookId' => $bookId, 'status' => '1', 'branchId' => $branchId, 'readerId' => $readerId,'title'=>$title,'resId'=>$resId);
+						$info = array('bDate' => $bDate, 'rDate' => $rdate, 'bookId' => $bookId, 'status' => '1', 'branchId' => $branchId, 'readerId' => $readerId, 'title' => $title, 'resId' => $resId);
 						return $info;
 					}
 

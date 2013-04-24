@@ -4,7 +4,7 @@
 		$(function() {
 
 			$("#search").autocomplete({
-				source : 'http://localhost:8080/sandi/index.php/reader/searchBooks',
+				source : "<?= base_url();?>index.php/reader/searchBooks",
 			})
 
 		});
