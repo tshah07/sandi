@@ -25,7 +25,7 @@ class Login extends MY_Controller {
 		
 		
 		if ($_GET['username'] == '' or $_GET['password'] == '') {
-			$data['error'] = "Please Login First with ur readerId</br> Use username = 1 and Password = sandy";
+			$data['error'] = "Please Login First with ur readerId</br> Use username = 2 and Password = sandy";
 			redirect('/');
 		}
 		
