@@ -21,7 +21,7 @@ class Login extends MY_Controller {
 	// Reader login function 
 	
 	public function readerLogin() {
-<<<<<<< HEAD
+
 		
 		
 		if ($_GET['username'] == '' or $_GET['password'] == '') {
